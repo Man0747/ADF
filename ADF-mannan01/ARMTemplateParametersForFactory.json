@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "ADF-mannan01"
+		},
+		"LS_Adls_accountKey": {
+			"value": ""
+		},
+		"LS_Adls_properties_typeProperties_url": {
+			"value": "https://adlsmannan01.dfs.core.windows.net/"
+		}
+	}
+}
