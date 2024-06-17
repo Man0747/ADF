@@ -17,7 +17,7 @@
 		},
 		"LS_RestApi_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://api.data.gov.in/"
+			"defaultValue": "https://api.data.gov.in"
 		}
 	},
 	"variables": {
@@ -50,7 +50,7 @@
 				"type": "RestService",
 				"typeProperties": {
 					"url": "[parameters('LS_RestApi_properties_typeProperties_url')]",
-					"enableServerCertificateValidation": true,
+					"enableServerCertificateValidation": false,
 					"authenticationType": "Anonymous"
 				}
 			},
@@ -70,6 +70,7 @@
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
+						"fileName": "test.csv",
 						"folderPath": "data",
 						"fileSystem": "mannan"
 					},

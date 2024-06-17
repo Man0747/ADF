@@ -17,7 +17,7 @@
 		},
 		"LS_RestApi_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://api.data.gov.in/"
+			"defaultValue": "https://api.data.gov.in"
 		},
 		"containerUri": {
 			"type": "string",
