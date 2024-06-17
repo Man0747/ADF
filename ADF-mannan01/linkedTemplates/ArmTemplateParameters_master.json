@@ -11,6 +11,9 @@
 		"LS_Adls_properties_typeProperties_url": {
 			"value": "https://adlsmannan01.dfs.core.windows.net/"
 		},
+		"LS_RestApi_properties_typeProperties_url": {
+			"value": "https://api.data.gov.in/"
+		},
 		"containerUri": {
 			"value": ""
 		},
