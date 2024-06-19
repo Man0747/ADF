@@ -3,7 +3,7 @@
 	"properties": {
 		"activities": [
 			{
-				"name": "Copy data1",
+				"name": "Copy_PollutionData",
 				"type": "Copy",
 				"dependsOn": [],
 				"policy": {
@@ -16,10 +16,14 @@
 				"userProperties": [],
 				"typeProperties": {
 					"source": {
-						"type": "RestSource",
-						"httpRequestTimeout": "00:01:40",
-						"requestInterval": "00.00:00:00.010",
-						"requestMethod": "GET"
+						"type": "DelimitedTextSource",
+						"storeSettings": {
+							"type": "HttpReadSettings",
+							"requestMethod": "GET"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextReadSettings"
+						}
 					},
 					"sink": {
 						"type": "DelimitedTextSink",
@@ -32,8 +36,22 @@
 							"fileExtension": ".csv"
 						}
 					},
-					"enableStaging": false
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
+				"inputs": [
+					{
+						"referenceName": "DS_InputPollutionData",
+						"type": "DatasetReference"
+					}
+				],
 				"outputs": [
 					{
 						"referenceName": "DS_OutputPollutionData",
@@ -42,6 +60,11 @@
 				]
 			}
 		],
+		"parameters": {
+			"filename": {
+				"type": "string"
+			}
+		},
 		"annotations": []
 	}
 }
