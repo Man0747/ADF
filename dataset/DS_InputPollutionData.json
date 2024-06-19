@@ -1,16 +1,16 @@
 {
-	"name": "DS_OutputPollutionData",
+	"name": "DS_InputPollutionData",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_Adls",
+			"referenceName": "LS_InputPollutionData",
 			"type": "LinkedServiceReference"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
-				"type": "AzureBlobFSLocation",
-				"fileSystem": "mannan"
+				"type": "HttpServerLocation",
+				"relativeUrl": "/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd000001db6f8d31eff0408478fc83710b8c735f&format=csv&offset=100&limit=2000"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",

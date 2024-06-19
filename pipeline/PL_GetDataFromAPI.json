@@ -34,15 +34,9 @@
 					},
 					"enableStaging": false
 				},
-				"inputs": [
-					{
-						"referenceName": "DS_RestApi",
-						"type": "DatasetReference"
-					}
-				],
 				"outputs": [
 					{
-						"referenceName": "DScsv",
+						"referenceName": "DS_OutputPollutionData",
 						"type": "DatasetReference"
 					}
 				]
