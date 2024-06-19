@@ -15,6 +15,14 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().filename",
+					"type": "Expression"
+				},
+				"folderPath": {
+					"value": "@concat('PollutionRawData', '/' , formatDateTime(utcnow(), 'yyyy') , '/' , formatDateTime(utcnow(), 'MM') , '/' , formatDateTime(utcnow(), 'MM-dd-yyyy'))",
+					"type": "Expression"
+				},
 				"fileSystem": "mannan"
 			},
 			"columnDelimiter": ",",

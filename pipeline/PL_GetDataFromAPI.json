@@ -55,7 +55,13 @@
 				"outputs": [
 					{
 						"referenceName": "DS_OutputPollutionData",
-						"type": "DatasetReference"
+						"type": "DatasetReference",
+						"parameters": {
+							"filename": {
+								"value": "@concat(pipeline().parameters.filename, '_' , formatDateTime(utcNow(), 'MM-dd-yyyy_hh-mm-ss') , '.csv')",
+								"type": "Expression"
+							}
+						}
 					}
 				]
 			}
