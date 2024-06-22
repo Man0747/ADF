@@ -15,9 +15,13 @@
 			"type": "string",
 			"defaultValue": "https://adlsmannan01.dfs.core.windows.net/"
 		},
-		"LS_RestApi_properties_typeProperties_url": {
+		"LS_InputPollutionData_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd000001db6f8d31eff0408478fc83710b8c735f&format=csv&offset=100&limit=2000"
+			"defaultValue": "https://api.data.gov.in"
+		},
+		"TR_IngestPollutionRawData_properties_PL_GetDataFromAPI_parameters_filename": {
+			"type": "string",
+			"defaultValue": "PollutionData"
 		}
 	},
 	"variables": {
@@ -31,7 +35,7 @@
 			"properties": {
 				"activities": [
 					{
-						"name": "Copy data1",
+						"name": "Copy_PollutionData",
 						"type": "Copy",
 						"dependsOn": [],
 						"policy": {
@@ -44,10 +48,14 @@
 						"userProperties": [],
 						"typeProperties": {
 							"source": {
-								"type": "RestSource",
-								"httpRequestTimeout": "00:01:40",
-								"requestInterval": "00.00:00:00.010",
-								"requestMethod": "GET"
+								"type": "DelimitedTextSource",
+								"storeSettings": {
+									"type": "HttpReadSettings",
+									"requestMethod": "GET"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextReadSettings"
+								}
 							},
 							"sink": {
 								"type": "DelimitedTextSink",
@@ -60,20 +68,33 @@
 									"fileExtension": ".csv"
 								}
 							},
-							"enableStaging": false
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
 						},
 						"inputs": [
 							{
-								"referenceName": "DS_RestApi",
+								"referenceName": "DS_InputPollutionData",
 								"type": "DatasetReference",
 								"parameters": {}
 							}
 						],
 						"outputs": [
 							{
-								"referenceName": "DScsv",
+								"referenceName": "DS_OutputPollutionData",
 								"type": "DatasetReference",
-								"parameters": {}
+								"parameters": {
+									"filename": {
+										"value": "@concat(pipeline().parameters.filename, '_' , formatDateTime(utcNow(), 'MM-dd-yyyy_hh-mm-ss') , '.csv')",
+										"type": "Expression"
+									}
+								}
 							}
 						]
 					}
@@ -81,15 +102,47 @@
 				"policy": {
 					"elapsedTimeMetric": {}
 				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
 				"annotations": []
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_RestApi')]",
-				"[concat(variables('factoryId'), '/datasets/DScsv')]"
+				"[concat(variables('factoryId'), '/datasets/DS_InputPollutionData')]",
+				"[concat(variables('factoryId'), '/datasets/DS_OutputPollutionData')]"
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DScsv')]",
+			"name": "[concat(parameters('factoryName'), '/DS_InputPollutionData')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_InputPollutionData",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "HttpServerLocation",
+						"relativeUrl": "/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd000001db6f8d31eff0408478fc83710b8c735f&format=csv&offset=100&limit=2000"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_InputPollutionData')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_OutputPollutionData')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -97,13 +150,24 @@
 					"referenceName": "LS_Adls",
 					"type": "LinkedServiceReference"
 				},
+				"parameters": {
+					"filename": {
+						"type": "string"
+					}
+				},
 				"annotations": [],
 				"type": "DelimitedText",
 				"typeProperties": {
 					"location": {
 						"type": "AzureBlobFSLocation",
-						"fileName": "test.csv",
-						"folderPath": "data",
+						"fileName": {
+							"value": "@dataset().filename",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@concat('PollutionRawData', '/' , formatDateTime(utcnow(), 'yyyy') , '/' , formatDateTime(utcnow(), 'MM') , '/' , formatDateTime(utcnow(), 'MM-dd-yyyy'))",
+							"type": "Expression"
+						},
 						"fileSystem": "mannan"
 					},
 					"columnDelimiter": ",",
@@ -135,14 +199,14 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/LS_RestApi')]",
+			"name": "[concat(parameters('factoryName'), '/LS_InputPollutionData')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "RestService",
+				"type": "HttpServer",
 				"typeProperties": {
-					"url": "[parameters('LS_RestApi_properties_typeProperties_url')]",
+					"url": "[parameters('LS_InputPollutionData_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": false,
 					"authenticationType": "Anonymous"
 				}
@@ -150,23 +214,35 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_RestApi')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
+			"name": "[concat(parameters('factoryName'), '/TR_IngestPollutionRawData')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_RestApi",
-					"type": "LinkedServiceReference"
-				},
 				"annotations": [],
-				"type": "RestResource",
+				"runtimeState": "Started",
+				"pipelines": [
+					{
+						"pipelineReference": {
+							"referenceName": "PL_GetDataFromAPI",
+							"type": "PipelineReference"
+						},
+						"parameters": {
+							"filename": "[parameters('TR_IngestPollutionRawData_properties_PL_GetDataFromAPI_parameters_filename')]"
+						}
+					}
+				],
+				"type": "ScheduleTrigger",
 				"typeProperties": {
-					"relativeUrl": ""
-				},
-				"schema": []
+					"recurrence": {
+						"frequency": "Hour",
+						"interval": 1,
+						"startTime": "2024-06-22T07:00:00",
+						"timeZone": "India Standard Time"
+					}
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_RestApi')]"
+				"[concat(variables('factoryId'), '/pipelines/PL_GetDataFromAPI')]"
 			]
 		}
 	]

@@ -15,9 +15,13 @@
 			"type": "string",
 			"defaultValue": "https://adlsmannan01.dfs.core.windows.net/"
 		},
-		"LS_RestApi_properties_typeProperties_url": {
+		"LS_InputPollutionData_properties_typeProperties_url": {
 			"type": "string",
-			"defaultValue": "https://api.data.gov.in/resource/3b01bcb8-0b14-4abf-b6f2-c1bfd384ba69?api-key=579b464db66ec23bdd000001db6f8d31eff0408478fc83710b8c735f&format=csv&offset=100&limit=2000"
+			"defaultValue": "https://api.data.gov.in"
+		},
+		"TR_IngestPollutionRawData_properties_PL_GetDataFromAPI_parameters_filename": {
+			"type": "string",
+			"defaultValue": "PollutionData"
 		},
 		"containerUri": {
 			"type": "string",
@@ -52,8 +56,11 @@
 					"LS_Adls_properties_typeProperties_url": {
 						"value": "[parameters('LS_Adls_properties_typeProperties_url')]"
 					},
-					"LS_RestApi_properties_typeProperties_url": {
-						"value": "[parameters('LS_RestApi_properties_typeProperties_url')]"
+					"LS_InputPollutionData_properties_typeProperties_url": {
+						"value": "[parameters('LS_InputPollutionData_properties_typeProperties_url')]"
+					},
+					"TR_IngestPollutionRawData_properties_PL_GetDataFromAPI_parameters_filename": {
+						"value": "[parameters('TR_IngestPollutionRawData_properties_PL_GetDataFromAPI_parameters_filename')]"
 					}
 				}
 			},
