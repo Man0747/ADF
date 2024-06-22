@@ -1,0 +1,28 @@
+{
+	"name": "PL_DataCleansing",
+	"properties": {
+		"activities": [
+			{
+				"name": "DataCleansing",
+				"type": "DatabricksNotebook",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"notebookPath": "/PollutionDataAnalysis/Silver_DataCleansing/Silver_DataCleansing"
+				},
+				"linkedServiceName": {
+					"referenceName": "LS_ADB",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
