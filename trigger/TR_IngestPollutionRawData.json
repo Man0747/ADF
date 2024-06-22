@@ -1,0 +1,27 @@
+{
+	"name": "TR_IngestPollutionRawData",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_GetDataFromAPI",
+					"type": "PipelineReference"
+				},
+				"parameters": {
+					"filename": "PollutionData"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Hour",
+				"interval": 1,
+				"startTime": "2024-06-22T07:00:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
