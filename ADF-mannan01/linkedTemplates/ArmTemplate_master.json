@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'LS_Adls'"
 		},
+		"LS_ADB_accessToken": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accessToken' of 'LS_ADB'"
+		},
 		"LS_Adls_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://adlsmannan01.dfs.core.windows.net/"
@@ -52,6 +56,9 @@
 					},
 					"LS_Adls_accountKey": {
 						"value": "[parameters('LS_Adls_accountKey')]"
+					},
+					"LS_ADB_accessToken": {
+						"value": "[parameters('LS_ADB_accessToken')]"
 					},
 					"LS_Adls_properties_typeProperties_url": {
 						"value": "[parameters('LS_Adls_properties_typeProperties_url')]"

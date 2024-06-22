@@ -8,6 +8,9 @@
 		"LS_Adls_accountKey": {
 			"value": ""
 		},
+		"LS_ADB_accessToken": {
+			"value": ""
+		},
 		"LS_Adls_properties_typeProperties_url": {
 			"value": "https://adlsmannan01.dfs.core.windows.net/"
 		},
