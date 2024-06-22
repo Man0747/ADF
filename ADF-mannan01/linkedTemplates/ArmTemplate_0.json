@@ -77,7 +77,7 @@
 						"type": "SecureString",
 						"value": "[parameters('LS_ADB_accessToken')]"
 					},
-					"newClusterNodeType": "Standard_DS4_v2",
+					"newClusterNodeType": "Standard_D4ds_v4",
 					"newClusterNumOfWorker": "1",
 					"newClusterSparkEnvVars": {
 						"PYSPARK_PYTHON": "/databricks/python3/bin/python3"
