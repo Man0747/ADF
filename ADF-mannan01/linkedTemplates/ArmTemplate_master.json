@@ -7,13 +7,13 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ADF-mannan01"
 		},
-		"LS_Adls_accountKey": {
-			"type": "secureString",
-			"metadata": "Secure string for 'accountKey' of 'LS_Adls'"
-		},
 		"LS_ADB_accessToken": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accessToken' of 'LS_ADB'"
+		},
+		"LS_Adls_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'LS_Adls'"
 		},
 		"LS_Adls_properties_typeProperties_url": {
 			"type": "string",
@@ -54,11 +54,11 @@
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
 					},
-					"LS_Adls_accountKey": {
-						"value": "[parameters('LS_Adls_accountKey')]"
-					},
 					"LS_ADB_accessToken": {
 						"value": "[parameters('LS_ADB_accessToken')]"
+					},
+					"LS_Adls_accountKey": {
+						"value": "[parameters('LS_Adls_accountKey')]"
 					},
 					"LS_Adls_properties_typeProperties_url": {
 						"value": "[parameters('LS_Adls_properties_typeProperties_url')]"

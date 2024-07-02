@@ -5,10 +5,10 @@
 		"factoryName": {
 			"value": "ADF-mannan01"
 		},
-		"LS_Adls_accountKey": {
+		"LS_ADB_accessToken": {
 			"value": ""
 		},
-		"LS_ADB_accessToken": {
+		"LS_Adls_accountKey": {
 			"value": ""
 		},
 		"LS_Adls_properties_typeProperties_url": {
